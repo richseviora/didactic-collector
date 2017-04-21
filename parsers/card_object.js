@@ -24,7 +24,7 @@ var CardObject = (function () {
     });
     Object.defineProperty(CardObject.prototype, "humanName", {
         get: function () {
-            return this.card.find('span').text();
+            return this.spanContents().first().text();
         },
         enumerable: true,
         configurable: true
@@ -36,6 +36,9 @@ var CardObject = (function () {
         enumerable: true,
         configurable: true
     });
+    CardObject.prototype.spanContents = function () {
+        return this.card.find('span');
+    };
     return CardObject;
 }());
 exports.CardObject = CardObject;

@@ -25,11 +25,15 @@ export abstract class CardObject {
     }
 
     public get humanName(): string {
-        return this.card.find('span').text();
+        return this.spanContents().first().text();
     }
 
     public get internalName(): string {
         return this.card.find('img').attr('src');
+    }
+
+    protected spanContents(): Cheerio {
+        return this.card.find('span');
     }
 
 }
