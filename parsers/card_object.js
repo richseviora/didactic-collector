@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Cheerio = require("cheerio");
 var CardObject = (function () {
     function CardObject(card) {
         this.card = card;
@@ -33,35 +32,6 @@ var CardObject = (function () {
     Object.defineProperty(CardObject.prototype, "internalName", {
         get: function () {
             return this.card.find('img').attr('src');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(CardObject.prototype, "currentLevel", {
-        get: function () {
-            return this.levelImageBaseString().current;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(CardObject.prototype, "maxLevel", {
-        get: function () {
-            return this.levelImageBaseString().max;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    CardObject.prototype.levelImageBaseString = function () {
-        var regex = /.*\/(\d+)-(\d+)\.png/;
-        var results = regex.exec(this.levelImageString);
-        return {
-            max: parseInt(results[1]),
-            current: parseInt(results[2])
-        };
-    };
-    Object.defineProperty(CardObject.prototype, "levelImageString", {
-        get: function () {
-            return Cheerio(this.card.find('img').get(1)).attr('src');
         },
         enumerable: true,
         configurable: true
