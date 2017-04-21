@@ -1,6 +1,13 @@
 import {CardObject} from './card_object';
 import * as Cheerio from 'cheerio';
 
+/**
+ * The LevelledCardObject parses the card information and provides the inventory data for the card.
+ * 
+ * @export
+ * @class LevelledCardObject
+ * @extends {CardObject}
+ */
 export class LevelledCardObject extends CardObject {
 
     public get currentLevel(): number {

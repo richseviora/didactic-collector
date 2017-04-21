@@ -12,6 +12,13 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var card_object_1 = require("./card_object");
 var Cheerio = require("cheerio");
+/**
+ * The LevelledCardObject parses the card information and provides the inventory data for the card.
+ *
+ * @export
+ * @class LevelledCardObject
+ * @extends {CardObject}
+ */
 var LevelledCardObject = (function (_super) {
     __extends(LevelledCardObject, _super);
     function LevelledCardObject() {
