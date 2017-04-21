@@ -1,0 +1,11 @@
+{
+  "name": "me3-coop-inventory-scanner",
+  "version": "1.0.0",
+  "description": "Scans a player's N7 inventory page and parses the data.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
