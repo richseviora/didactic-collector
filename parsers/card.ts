@@ -10,15 +10,15 @@ export abstract class CardParser<T extends IInventoryEntry> implements ICardPars
     public abstract parseCard(item: Cheerio): T;
 
     protected getHumanName(card: Cheerio): string {
-
+        return '';
     }
 
     protected getMaxLevel(card: Cheerio): string {
-
+        return '';
     }
 
     protected getCurrentLevel(card: Cheerio): string {
-
+        return '';
     }
 
 }
@@ -40,15 +40,23 @@ export class CardObject {
     }
 
     public get currentLevel(): number {
-
+        return this.levelImageBaseString().current;
     }
 
     public get maxLevel(): number {
-
+        return this.levelImageBaseString().max;
     }
 
-    private levelImageString(): string {
+    private levelImageBaseString(): {max: number, current: number} {
+        const regex = /.*\/(\d+)-(\d+)\.png/;
+        const results = regex.exec(this.levelImageString);
+        return {
+            max: parseInt(results[1]),
+            current: parseInt(results[2])
+        }
+    }
+
+    private get levelImageString(): string {
         return Cheerio(this.card.find('img').get(1)).attr('src');
     }
 }
-let s = '<div class="card off" style="background: url(\'//lvlt.bioware.cdn.ea.com/bioware/u/f/eagames/bioware/masseffect3/n7hq/game2webaxis/images/masseffect3/icons/multiplayer/cards/ultrarare-off.png\') no-repeat 50% 0;"><img src="//lvlt.bioware.cdn.ea.com/bioware/u/f/eagames/bioware/masseffect3/n7hq/game2webaxis/images/masseffect3/icons/multiplayer/guns/Pistol_Eagle.png" width="160" height="120" alt="Accurate, rapid-fire handgun." title="Accurate, rapid-fire handgun."><span>N7 Eagle</span><img src="//lvlt.bioware.cdn.ea.com/bioware/u/f/eagames/bioware/masseffect3/n7hq/game2webaxis/images/masseffect3/icons/multiplayer/levels/10-0.png" alt="" width="160" height="6"></div>';

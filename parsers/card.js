@@ -5,10 +5,13 @@ var CardParser = (function () {
     function CardParser() {
     }
     CardParser.prototype.getHumanName = function (card) {
+        return '';
     };
     CardParser.prototype.getMaxLevel = function (card) {
+        return '';
     };
     CardParser.prototype.getCurrentLevel = function (card) {
+        return '';
     };
     return CardParser;
 }());
@@ -33,21 +36,34 @@ var CardObject = (function () {
     });
     Object.defineProperty(CardObject.prototype, "currentLevel", {
         get: function () {
+            return this.levelImageBaseString().current;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(CardObject.prototype, "maxLevel", {
         get: function () {
+            return this.levelImageBaseString().max;
         },
         enumerable: true,
         configurable: true
     });
-    CardObject.prototype.levelImageString = function () {
-        return Cheerio(this.card.find('img').get(1)).attr('src');
+    CardObject.prototype.levelImageBaseString = function () {
+        var regex = /.*\/(\d+)-(\d+)\.png/;
+        var results = regex.exec(this.levelImageString);
+        return {
+            max: parseInt(results[1]),
+            current: parseInt(results[2])
+        };
     };
+    Object.defineProperty(CardObject.prototype, "levelImageString", {
+        get: function () {
+            return Cheerio(this.card.find('img').get(1)).attr('src');
+        },
+        enumerable: true,
+        configurable: true
+    });
     return CardObject;
 }());
 exports.CardObject = CardObject;
-var s = '<div class="card off" style="background: url(\'//lvlt.bioware.cdn.ea.com/bioware/u/f/eagames/bioware/masseffect3/n7hq/game2webaxis/images/masseffect3/icons/multiplayer/cards/ultrarare-off.png\') no-repeat 50% 0;"><img src="//lvlt.bioware.cdn.ea.com/bioware/u/f/eagames/bioware/masseffect3/n7hq/game2webaxis/images/masseffect3/icons/multiplayer/guns/Pistol_Eagle.png" width="160" height="120" alt="Accurate, rapid-fire handgun." title="Accurate, rapid-fire handgun."><span>N7 Eagle</span><img src="//lvlt.bioware.cdn.ea.com/bioware/u/f/eagames/bioware/masseffect3/n7hq/game2webaxis/images/masseffect3/icons/multiplayer/levels/10-0.png" alt="" width="160" height="6"></div>';
 //# sourceMappingURL=card.js.map
