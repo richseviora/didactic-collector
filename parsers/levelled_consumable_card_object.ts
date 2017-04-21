@@ -1,16 +1,25 @@
 import { CardObject } from "./card_object";
+import * as Cheerio from 'cheerio';
 
 export class LevelledConsumableCardObject extends CardObject {
 
     private static spanRegex = /(.+) ([IVX]+) - (\d+)/;
+
+    private entryItems: ILevelEntry[];
+
+    public get entries(): ILevelEntry[] {
+        if(this.entryItems) {
+            return this.entryItems;
+        }
+        this.entryItems = this.getLevelEntries();
+        return this.entryItems;
+    }
 
     public get humanName(): string {
         const initialValue = this.spanContents();
         const initialName:string = initialValue.first().text();
         return this.parseSpanText(initialName).name;
     }
-
-    
 
     private parseSpanText(text: string): ILevelEntry {
         const results = LevelledConsumableCardObject.spanRegex.exec(text);
@@ -37,9 +46,17 @@ export class LevelledConsumableCardObject extends CardObject {
             default: return 0;
         }
     }
+
+    private getLevelEntries(): ILevelEntry[] {
+        const levelEntries = this.spanContents();
+        const mapResult = levelEntries.map((index, element) => {
+            return this.parseSpanText(Cheerio(element).text());
+        });
+        return mapResult.toArray() as any as ILevelEntry[];
+    }
 }
 
-interface ILevelEntry {
+export interface ILevelEntry {
     name: string;
     level: number;
     quantity: number;

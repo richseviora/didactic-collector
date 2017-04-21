@@ -11,11 +11,23 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var card_object_1 = require("./card_object");
+var Cheerio = require("cheerio");
 var LevelledConsumableCardObject = (function (_super) {
     __extends(LevelledConsumableCardObject, _super);
     function LevelledConsumableCardObject() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    Object.defineProperty(LevelledConsumableCardObject.prototype, "entries", {
+        get: function () {
+            if (this.entryItems) {
+                return this.entryItems;
+            }
+            this.entryItems = this.getLevelEntries();
+            return this.entryItems;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(LevelledConsumableCardObject.prototype, "humanName", {
         get: function () {
             var initialValue = this.spanContents();
@@ -48,6 +60,14 @@ var LevelledConsumableCardObject = (function (_super) {
             case 'X': return 10;
             default: return 0;
         }
+    };
+    LevelledConsumableCardObject.prototype.getLevelEntries = function () {
+        var _this = this;
+        var levelEntries = this.spanContents();
+        var mapResult = levelEntries.map(function (index, element) {
+            return _this.parseSpanText(Cheerio(element).text());
+        });
+        return mapResult.toArray();
     };
     return LevelledConsumableCardObject;
 }(card_object_1.CardObject));
