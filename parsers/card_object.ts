@@ -1,7 +1,13 @@
 import * as Cheerio from 'cheerio';
 import { Rarity } from "../models/rarity";
 
-export abstract class CardObject {
+export interface ICardObject {
+    readonly rarity: Rarity;
+    readonly humanName: string;
+    readonly internalName: string;
+}
+
+export abstract class CardObject implements ICardObject {
 
     protected card: Cheerio;
 
