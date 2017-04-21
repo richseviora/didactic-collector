@@ -4,7 +4,7 @@
   "description": "Scans a player's N7 inventory page and parses the data.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +12,7 @@
     "cheerio": "^0.22.0"
   },
   "devDependencies": {
+    "@types/jest": "^19.2.2",
     "jest": "^19.0.2"
   }
 }
