@@ -1,4 +1,5 @@
 import {PageLoader} from './page_loader';
+import {Cheerio} from 'cheerio';
 import * as http from 'http';
 
 let callback: (res: http.ClientResponse) => void = function(res: http.ClientResponse) {
